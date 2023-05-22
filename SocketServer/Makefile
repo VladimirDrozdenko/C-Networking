@@ -4,7 +4,7 @@ CFLAGS = -Wall -Werror -Og
 SRC_DIR = .
 OBJ_DIR = obj
 
-INCLUDE_PATH = -I../Common
+INCLUDE_PATH = -I./ -I../Common
 LIB_NAME = libsocket_common.so
 BIN_DIR = ../bin
 
