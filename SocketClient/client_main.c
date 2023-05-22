@@ -30,29 +30,38 @@ int main()
 
     printf("[Connected]\n");
 
-    const char* request_format = "GET \\ HTTP/1.1\r\nHost:%s\r\n\r\n";
+    printf("Type your message ('exit' to exist the client)\n\n");
 
-    char buffer[BUFFER_SIZE];
-    snprintf(buffer, BUFFER_SIZE, request_format, ip);
+    char* buffer = 0;
+    size_t buff_capacity = 0;
 
-    long bytes_sent = send(socket_fd, buffer, strlen(buffer), 0);
-    if (bytes_sent < 0)
+    while (1)
     {
-        perror("failed to send request");
-        close(socket_fd);
-        exit(EXIT_FAILURE);
+        ssize_t chars_received = getline(&buffer, &buff_capacity, stdin);
+
+        if (chars_received > 0 && 0 == strcmp(buffer, "exit\n"))
+        {
+            break;
+        }
+
+        long bytes_sent = send(socket_fd, buffer, strlen(buffer), 0);
+        if (bytes_sent < 0)
+        {
+            perror("failed to send request");
+            break;
+        }
     }
 
-    long bytes_received = recv(socket_fd, &buffer, BUFFER_SIZE, 0);
-    if (bytes_received < 0)
-    {
-        fprintf(stderr, "Failed to receive response. Error: %s\n", strerror(errno));
-        close(socket_fd);
-        exit(EXIT_FAILURE);
-    }
+    // long bytes_received = recv(socket_fd, &buffer, BUFFER_SIZE, 0);
+    // if (bytes_received < 0)
+    // {
+    //     fprintf(stderr, "Failed to receive response. Error: %s\n", strerror(errno));
+    //     close(socket_fd);
+    //     exit(EXIT_FAILURE);
+    // }
 
-    printf("[[Received %ld bytes]]\n", bytes_received);
-    printf("%s\n", buffer);
+    // printf("[[Received %ld bytes]]\n", bytes_received);
+    // printf("%s\n", buffer);
 
     close(socket_fd);
     return EXIT_SUCCESS;

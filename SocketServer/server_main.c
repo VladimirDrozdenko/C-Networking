@@ -33,19 +33,32 @@ int main()
 
     char buffer[BUFFER_SIZE];
 
-    long bytes_received = recv(client_socket_fd, &buffer, BUFFER_SIZE, 0);
-    if (bytes_received < 0)
+    while (1)
     {
-        fprintf(stderr, "Failed to receive response. Error: %s\n", strerror(errno));
-        close(client_socket_fd);
-        close(socket_fd);
-        exit(EXIT_FAILURE);
-    }
+        long bytes_received = recv(client_socket_fd, buffer, BUFFER_SIZE, 0);
+        if (bytes_received < 0)
+        {
+            perror("Failed to receive response");
+            break;
+        }
 
-    printf("[[Received %ld bytes]]\n", bytes_received);
-    printf("%s\n", buffer);
+        if (bytes_received > 0)
+        {
+            buffer[bytes_received] = 0;
+            printf("Received %ld bytes: %s\n", bytes_received, buffer);
+        }
+
+        if (bytes_received == 0)
+        {
+            printf("Connection was closed by the client\n");
+            break;
+        }
+    }
+    
 
     close(client_socket_fd);
+
+    shutdown(socket_fd, SHUT_RDWR);
     close(socket_fd);
 
     return EXIT_SUCCESS;
