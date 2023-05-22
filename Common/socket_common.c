@@ -7,7 +7,7 @@
 #include <sys/socket.h>
 #include <arpa/inet.h>
 
-void die_on_failure(int res, const char* msg)
+void die_on_failure(bool res, const char* msg)
 {
     if (res)
     {

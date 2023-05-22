@@ -5,7 +5,7 @@
 #include "socket_common.h"
 
 
-const unsigned int BUFFER_SIZE = 1024;
+static const unsigned int BUFFER_SIZE = 1024;
 
 
 struct IncomingConnection* acceptIncomingConnection(int socket_fd)
@@ -29,7 +29,7 @@ void processConnection(int socket_fd)
 {
     char buffer[BUFFER_SIZE];
 
-    while (1)
+    while (true)
     {
         long bytes_received = recv(socket_fd, buffer, BUFFER_SIZE, 0);
         if (bytes_received < 0)

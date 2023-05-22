@@ -9,7 +9,7 @@
 
 #include "socket_common.h"
 
-const char* ip = "127.0.0.1"; //"172.253.122.102";
+const char* ip = "127.0.0.1";
 const unsigned int port = 2000; //80;
 
 //const unsigned int BUFFER_SIZE = 2048;
