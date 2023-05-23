@@ -27,7 +27,7 @@ int main()
 
     die_on_failure(listen(socket_fd, connection_queue_len) != 0, "failed to setup listener");
 
-    printf("Service is listening...\n");
+    printf("Service is listening...\n\n");
 
     struct IncomingConnection* connection = acceptIncomingConnection(socket_fd);
 

@@ -38,8 +38,14 @@ int main()
     while (1)
     {
         ssize_t chars_received = getline(&buffer, &buff_capacity, stdin);
+        if (chars_received <= 0)
+        {
+            continue;
+        }
 
-        if (chars_received > 0 && 0 == strcmp(buffer, "exit\n"))
+        buffer[chars_received-1] = 0;
+
+        if (0 == strcmp(buffer, "exit"))
         {
             break;
         }
