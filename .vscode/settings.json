@@ -7,6 +7,7 @@
         "utils.h": "c",
         "stdio.h": "c",
         "inet.h": "c",
-        "socket_common.h": "c"
+        "socket_common.h": "c",
+        "stdbool.h": "c"
     }
 }

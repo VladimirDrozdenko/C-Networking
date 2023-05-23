@@ -15,6 +15,8 @@ const int connection_queue_len = 10;
 
 int main()
 {
+    printf("PID: %d\n", getpid());
+
     int socket_fd = socket(AF_INET, SOCK_STREAM, 0);
     die_on_failure(socket_fd < 0, "create socket failed");
 
@@ -24,6 +26,8 @@ int main()
     die_on_failure(bind(socket_fd, (struct sockaddr*) &local_address, sizeof(local_address)) != 0, "bind socket to address failed");
 
     die_on_failure(listen(socket_fd, connection_queue_len) != 0, "failed to setup listener");
+
+    printf("Service is listening...\n");
 
     struct IncomingConnection* connection = acceptIncomingConnection(socket_fd);
 
